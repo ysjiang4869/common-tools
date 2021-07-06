@@ -83,8 +83,8 @@ object NutshellToXmind {
             tempFolder.resolve( "temp.xmind"),
             finalFile
         )
-        println(tempFolder)
-//        FileUtils.forceDelete(tempFolder.toFile())
+        FileUtils.forceDelete(tempFolder.toFile())
+        println("convert file["+file.name+"] success")
     }
 
     private fun nodeToChild(children: XmindChildren, nodes: List<NutshellNode>?) {
