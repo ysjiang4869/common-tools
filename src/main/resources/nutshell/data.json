@@ -1,0 +1,4447 @@
+{
+  "data": {
+    "expandState": "expand",
+    "text": "K8S",
+    "font-family": "黑体, SimHei",
+    "font-weight": "bold"
+  },
+  "children": [
+    {
+      "data": {
+        "text": "概述",
+        "connect-color": "#E25B44",
+        "expandState": "collapse",
+        "layout_mind_offset": null,
+        "layout": null
+      },
+      "children": [
+        {
+          "data": {
+            "text": "组件",
+            "connect-color": "#E25B44",
+            "layout_right_offset": null,
+            "layout": null,
+            "expandState": "expand",
+            "image": "K8S_nbmx_files/Untitled_20210511100611.png?v=1&type=image&token=V1%3AtM2ofPFsBo5fQJHry6mjsq45-On0IfDrs5vfS-KLJLI",
+            "imageTitle": "",
+            "imageSize": {
+              "width": 200,
+              "height": 93
+            }
+          },
+          "children": [
+            {
+              "data": {
+                "text": "控制平面\n负责集群的管理，可以在集群的任何节点运行",
+                "connect-color": "#E25B44",
+                "expandState": "expand",
+                "note": "",
+                "layout_right_offset": null,
+                "layout": null
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "kube-apiserver：公开的API",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "etcd：K-V数据库，存储集群所有信息",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "kube-scheduler：调度器，选择pod在哪个节点运行",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "kube-controller-manager",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "cloud-controller-manager",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "Node组件\n在每个节点上运行，维护pods",
+                "connect-color": "#E25B44",
+                "expandState": "expand",
+                "layout_right_offset": null,
+                "layout": null
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "kubelet：管理容器，确保各类机制提供的PodSpecs中描述的容器处于运行状态且健康\n不会管理不是由kubernetes创建的容器",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "kube-proxy：网络代理，实现容器在集群内部或外部的访问",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "容器运行时：负责运行容器的软件，实现Kubernetes CRI（容器运行时接口）",
+                    "connect-color": "#E25B44",
+                    "expandState": "expand",
+                    "hyperlink": "https://github.com/kubernetes/community/blob/master/contributors/devel/sig-node/container-runtime-interface.md",
+                    "hyperlinkTitle": "",
+                    "layout_right_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "Docker",
+                        "connect-color": "#E25B44",
+                        "layout_right_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "containerd",
+                        "connect-color": "#E25B44",
+                        "layout_right_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "CRI-O",
+                        "connect-color": "#E25B44",
+                        "layout_right_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "插件",
+                "connect-color": "#E25B44",
+                "expandState": "expand",
+                "layout_right_offset": null,
+                "layout": null
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "DNS：提供DNS服务，为服务绑定域名，可以通过固定的域名访问内部服务",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "Web界面：官方提供的DashBoard",
+                    "connect-color": "#E25B44",
+                    "hyperlink": "https://kubernetes.io/zh/docs/tasks/access-application-cluster/web-ui-dashboard/",
+                    "hyperlinkTitle": "",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "对象：持久化的实体",
+            "connect-color": "#E25B44",
+            "layout_right_offset": null,
+            "layout": null,
+            "expandState": "expand",
+            "note": "几乎每个对象都包含spec规约和status状态。\n一个k8s对象必须包含以下信息：\n- `apiVersion` - 创建该对象所使用的 Kubernetes API 的版本\n- `kind` - 想要创建的对象的类别\n- `metadata` - 帮助唯一性标识对象的一些数据，包括一个 `name` 字符串、UID 和可选的 `namespace`\n- spec字段"
+          },
+          "children": [
+            {
+              "data": {
+                "text": "名称和IDs：每个对象都有；\n名称标识在同类资源中唯一；\nUID标识在整个集群唯一",
+                "connect-color": "#E25B44",
+                "layout_right_offset": null,
+                "layout": null
+              }
+            },
+            {
+              "data": {
+                "text": "命名空间：对虚拟集群，隔离资源，适用于多用户或跨团队，命令行指定 --namespace=<命名空间>",
+                "connect-color": "#E25B44",
+                "layout_right_offset": null,
+                "layout": null
+              }
+            },
+            {
+              "data": {
+                "text": "标签和选择运算符：添加到k8s对象上的K-V对象，用于pod调度节点、服务匹配pod等等",
+                "connect-color": "#E25B44",
+                "hyperlink": "https://kubernetes.io/zh/docs/concepts/overview/working-with-objects/labels/",
+                "hyperlinkTitle": "标签使用文档",
+                "layout_right_offset": null,
+                "layout": null
+              }
+            },
+            {
+              "data": {
+                "text": "注解：放在元数据中的K-V对，不用于选择对象，提供一些标记，用于后续的分析",
+                "connect-color": "#E25B44",
+                "layout_right_offset": null,
+                "layout": null
+              }
+            },
+            {
+              "data": {
+                "text": "字段选择器：api或者命令行筛选资源，示例：kubectl get pods --field-selector status.phase=Running",
+                "connect-color": "#E25B44",
+                "note": "可在字段选择器中使用 =、==和 != （= 和 == 的意义是相同的）操作符。可以通过，组合多个选择器。",
+                "layout_right_offset": null,
+                "layout": null
+              }
+            },
+            {
+              "data": {
+                "text": "推荐标签",
+                "connect-color": "#E25B44",
+                "expandState": "collapse",
+                "layout_right_offset": null,
+                "layout": null
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "app.kubernetes.io/name：应用程序的名称，例如mysql",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "app.kubernetes.io/instance：唯一缺点应用实例的名称，例如mysql-abcxy",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": " app.kubernetes.io/version：版本",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "app.kubernetes.io/component：架构中的组件，例如database",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "app.kubernetes.io/part-of：更高级别应用程序名称，例如Wordpress",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "app.kubernetes.io/managed：用于管理应用程序的工具，例如：helm",
+                    "connect-color": "#E25B44",
+                    "layout_right_offset": null,
+                    "layout": null
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "data": {
+        "text": "架构",
+        "connect-color": "#FF8357",
+        "layout_right_offset": null,
+        "layout": null,
+        "layout_mind_offset": null,
+        "expandState": "collapse"
+      },
+      "children": [
+        {
+          "data": {
+            "text": "节点Node",
+            "connect-color": "#FF8357",
+            "expandState": "expand",
+            "layout_right_offset": null,
+            "layout": null
+          },
+          "children": [
+            {
+              "data": {
+                "text": "管理节点",
+                "connect-color": "#FF8357",
+                "note": "1. 可以手动将节点标记为不可调度，但是不会影响已经存在的pod，适合需要重启node时使用\n\n    ```bash\n    kubectl cordon $NODENAME\n    ```",
+                "layout_right_offset": null,
+                "layout": null
+              }
+            },
+            {
+              "data": {
+                "text": "节点信息和状态",
+                "connect-color": "#FF8357",
+                "expandState": "expand",
+                "layout_right_offset": null,
+                "layout": null
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "状态：conditions 字段描述了所有 Running 节点的状态",
+                    "connect-color": "#FF8357",
+                    "expandState": "expand",
+                    "note": "如果 Ready 条件处于 Unknown 或者 False 状态的时间超过了 pod-eviction-timeout 值（默认五分钟），控制器会删除node上的pod，并在其他节点启动新的pod；如果此时是网络问题导致node接受不到删除指令，则这些pod会一直处于游离状态\n\n节点控制器在确认 Pod 在集群中已经停止运行前，不会强制删除它们。 你可以看到这些可能在无法访问的节点上运行的 Pod 处于 Terminating 或者 Unknown 状态",
+                    "layout_right_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "Ready",
+                        "connect-color": "#FF8357",
+                        "layout_right_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "DiskPressure",
+                        "connect-color": "#FF8357",
+                        "layout_right_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "MemoryPressure",
+                        "connect-color": "#FF8357",
+                        "layout_right_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "PIDPressure",
+                        "connect-color": "#FF8357",
+                        "layout_right_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "NetworkUnavailable",
+                        "connect-color": "#FF8357",
+                        "layout_right_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "容量：节点上的可用资源：CPU、内存和可以调度到节点上的 Pod 的个数上限",
+                    "connect-color": "#FF8357",
+                    "expandState": "expand",
+                    "layout_right_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "capacity：节点资源总量",
+                        "connect-color": "#FF8357",
+                        "layout_right_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "allocatable：可供pod消费的资源量",
+                        "connect-color": "#FF8357",
+                        "layout_right_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "控制面到节点通信",
+            "connect-color": "#FF8357",
+            "layout_right_offset": null,
+            "layout": null
+          }
+        },
+        {
+          "data": {
+            "text": "控制器",
+            "connect-color": "#FF8357",
+            "layout_right_offset": null,
+            "layout": null
+          }
+        },
+        {
+          "data": {
+            "text": "云控制器管理器",
+            "connect-color": "#FF8357",
+            "layout_right_offset": null,
+            "layout": null
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "text": "容器",
+        "connect-color": "#FAC172",
+        "expandState": "collapse",
+        "layout_mind_offset": null,
+        "layout": null
+      },
+      "children": [
+        {
+          "data": {
+            "text": "镜像",
+            "connect-color": "#FAC172",
+            "expandState": "expand",
+            "layout_left_offset": null,
+            "layout": null
+          },
+          "children": [
+            {
+              "data": {
+                "text": "名称：仓库地址:端口号/镜像名称:tag",
+                "connect-color": "#FAC172",
+                "layout_left_offset": null,
+                "layout": null
+              }
+            },
+            {
+              "data": {
+                "text": "默认拉取docker仓库",
+                "connect-color": "#FAC172",
+                "layout_left_offset": null,
+                "layout": null
+              }
+            },
+            {
+              "data": {
+                "text": "更新策略",
+                "connect-color": "#FAC172",
+                "expandState": "collapse",
+                "layout_left_offset": null,
+                "layout": null
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "IfNotPresent：默认，如果镜像标签是latest，效果等于always",
+                    "connect-color": "#FAC172",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "Always：每次更新",
+                    "connect-color": "#FAC172",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "如果设置不正确，会被当作always",
+                    "connect-color": "#FAC172",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "配置私有镜像仓库",
+                "connect-color": "#FAC172",
+                "layout_left_offset": null,
+                "layout": null
+              }
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "环境变量",
+            "connect-color": "#FAC172",
+            "expandState": "expand",
+            "layout_left_offset": null,
+            "layout": null
+          },
+          "children": [
+            {
+              "data": {
+                "text": "hostname设置为podname",
+                "connect-color": "#FAC172",
+                "layout_left_offset": null,
+                "layout": null
+              }
+            },
+            {
+              "data": {
+                "text": "Pod 定义中的用户所定义的环境变量也可在容器中使用",
+                "connect-color": "#FAC172",
+                "layout_left_offset": null,
+                "layout": null
+              }
+            },
+            {
+              "data": {
+                "text": "建容器时正在运行的所有服务的列表都被用作该容器的环境变量",
+                "connect-color": "#FAC172",
+                "layout_left_offset": null,
+                "layout": null
+              }
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "RuntimeClass",
+            "connect-color": "#FAC172",
+            "layout_left_offset": null,
+            "layout": null
+          }
+        },
+        {
+          "data": {
+            "text": "生命周期回调",
+            "connect-color": "#FAC172",
+            "expandState": "expand",
+            "layout_left_offset": null,
+            "layout": null
+          },
+          "children": [
+            {
+              "data": {
+                "text": "postStart：容器被创建之后立即被执行，不能保证会在容器ENTRYPOINT之前执行",
+                "connect-color": "#FAC172",
+                "layout_left_offset": null,
+                "layout": null
+              }
+            },
+            {
+              "data": {
+                "text": "preStop：容器被终止之前",
+                "connect-color": "#FAC172",
+                "layout_left_offset": null,
+                "layout": null
+              }
+            },
+            {
+              "data": {
+                "text": "支持：exec或者http",
+                "connect-color": "#FAC172",
+                "layout_left_offset": null,
+                "layout": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "data": {
+        "text": "工作负载",
+        "connect-color": "#ADC865",
+        "expandState": "collapse",
+        "layout_mind_offset": null,
+        "layout": null
+      },
+      "children": [
+        {
+          "data": {
+            "text": "Pod：最小管理单元，逻辑主机",
+            "connect-color": "#ADC865",
+            "expandState": "collapse",
+            "note": "> 说明： 重启 Pod 中的容器不应与重启 Pod 混淆。 Pod 不是进程，而是容器运行的环境。 在被删除之前，Pod 会一直存在。\n\n容器退出，可能造成pod 的restart次数+1，但是pod并没有被终止，也没有重启，其uid不会发生变化",
+            "layout_mind_offset": null,
+            "layout_left_offset": null,
+            "layout": null
+          },
+          "children": [
+            {
+              "data": {
+                "text": "概述",
+                "connect-color": "#ADC865",
+                "layout_left_offset": null,
+                "expandState": "expand",
+                "layout": null
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "pod模版：模板的更新不会对已存在的pod起作用\n而是创建新的pod取代旧的",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "note": "```yaml\napiVersion: batch/v1\nkind: Job\nmetadata:\n  name: hello\nspec:\n  template:\n    # 这里是 Pod 模版\n    spec:\n      containers:\n      - name: hello\n        image: busybox\n        command: ['sh', '-c', 'echo \"Hello, Kubernetes!\" && sleep 3600']\n      restartPolicy: OnFailure\n    # 以上为 Pod 模版\n ```",
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "更新替换",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null,
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "可更改字段",
+                        "connect-color": "#ADC865",
+                        "expandState": "collapse",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "spec.containers[*].image",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "spec.initContainers[*].image",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "spec.activeDeadlineSeconds",
+                            "connect-color": "#ADC865",
+                            "note": "1. 如果该字段尚未设置，可以将其设置为一个正数；\n2. 如果该字段已经设置为一个正数，可以将其设置为一个更小的、非负的整数。",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "spec.tolerations：只运行添加新条目",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "元数据大多不可变，两个例外",
+                        "connect-color": "#ADC865",
+                        "expandState": "collapse",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "generation 字段，如果更新 ，只能增加字段取值而不能减少",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "如果 metadata.deletionTimestamp 已经被设置，则不可以向 metadata.finalizers 列表中添加新的条目",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "资源共享",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "expandState": "expand",
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "pod内容器共享存储卷",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "pod内容器可以使用localhost通信\n共享ip地址和端口空间",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "容器的特权模式：使用操作系统管理权能",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null,
+                    "hyperlink": "https://kubernetes.io/zh/docs/tasks/configure-pod-container/security-context/",
+                    "hyperlinkTitle": ""
+                  }
+                },
+                {
+                  "data": {
+                    "text": "裸pod：直接创建pod，不受任何高级的控制器管理",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "静态pod：直接由kubelet管理，不能通过kube-api和命令行修改\n通过kubelet的启动参数指定",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "note": "kubelet也无法对静态Pod进行健康检查。静态Pod始终绑定在某一个kubelet节点上，并且始终运行在同一个节点。kubelet会自动为每一个静态Pod在kubernetes的apiserver上创建一个镜像Pod（Mirror Pod），可以通过apiserver看到静态Pod，但是不能通过apiserver控制。\n\nkubelet重启后生效。运行中的 kubelet 会定期扫描配置的目录， 并且根据文件中出现/消失的 Pod 来添加/删除 Pod。\n\n```bash\n# 指定url\n--manifest-url=<manifest-url>\n# 指定文件\n--pod-manifest-path=/etc/kubelet.d/\n```",
+                    "layout": null
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "生命周期",
+                "connect-color": "#ADC865",
+                "layout_left_offset": null,
+                "layout": null,
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "生命期：UID不变，不会重新调度，和pod同生命期对象，是否删除也根据uid",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "pod阶段：status中phase字段",
+                    "connect-color": "#ADC865",
+                    "expandState": "collapse",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "Pending\npod已被接受，但是有一个至多个容器未运行",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Running\nPod 已经绑定到了某个节点，Pod 中所有的容器都已被创建\n至少有一个容器仍在运行，或者正处于启动或重启状态",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Succeeded\nPod 中的所有容器都已成功终止，并且不会再重启",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Unknown\n无法取得 Pod 的状态。通常因为与 Pod 所在主机通信失败",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Failed\n所有容器都已终止，并且至少有一个容器是因为失败终止\n也就是说，容器以非 0 状态退出或者被系统终止\n",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "容器状态",
+                    "connect-color": "#ADC865",
+                    "expandState": "collapse",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "Waiting",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Running",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Terminated",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "kubectl describe pod <pod 名称> 查看",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "容器重启策略",
+                    "connect-color": "#ADC865",
+                    "expandState": "collapse",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "spec 中包含一个 restartPolicy 字段，适用于pod所有容器",
+                        "connect-color": "#ADC865",
+                        "note": "当 Pod 中的容器退出时，kubelet 会按指数回退 方式计算重启的延迟（10s、20s、40s、...），其最长延迟为 5 分钟。 一旦某容器执行了 10 分钟并且没有出现问题，kubelet 对该容器的重启回退计时器执行 重置操作。",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Always：无论exitcode是多少都重启",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Onfailure：仅exitcode不为0重启",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Never",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "pod状况",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null,
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "Pod 有一个 PodStatus 对象，其中包含一个 PodConditions 数组",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "字段",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "type：状况名称",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "status：true，false，unknown",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "message",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "reason",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "lastTransitionTime",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "type类型",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "PodScheduled",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "ContainersReady",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "Initialized",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "Ready",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "容器探针",
+                    "connect-color": "#ADC865",
+                    "expandState": "collapse",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "探针类型",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "livenessProbe",
+                            "connect-color": "#ADC865",
+                            "note": "指示容器是否正在运行。如果存活态探测失败，则 kubelet 会杀死容器， 并且容器将根据其重启策略决定未来",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "readinessProbe",
+                            "connect-color": "#ADC865",
+                            "note": "指示容器是否准备好为请求提供服务。如果就绪态探测失败， 端点控制器将从与 Pod 匹配的所有服务的端点列表中删除该 Pod 的 IP 地址。 初始延迟之前的就绪态的状态值默认为 Failure。\n要仅在探测成功时才开始向 Pod 发送请求流量，请指定就绪态探针。例如：启动需要加载大量数据；容器校验进入维护状态；此探针决定了pod的ready状态",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "startupProbe",
+                            "connect-color": "#ADC865",
+                            "note": "指示容器中的应用是否已经启动。如果**提供了启动探针，则所有其他探针都会被 禁用，直到此探针成功为止**。如果启动探测失败，kubelet 将杀死容器，而容器依其 重启策略进行重启。 \n\n适合启动时间特别长的应用",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "诊断方式",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "ExecAction：命令退出码==0成功",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "TcpSocketAction：tcp端口打开，成功",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "HttpGetAction：response code大于200小于400成功",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "返回结果",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "success",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "failure：未通过诊断",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "unknown：诊断失败，不采取行动",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "pod终止",
+                    "connect-color": "#ADC865",
+                    "expandState": "collapse",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "默认删除的gracefulPeriod=30s",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "超出gracefulPeriod，容器运行时发送kill信号",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "强制终止：kubectl delete pod xxx --grace-period=0",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "Init容器",
+                "connect-color": "#ADC865",
+                "layout_left_offset": null,
+                "layout": null,
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "特点",
+                    "connect-color": "#ADC865",
+                    "expandState": "collapse",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "应用容器启动之前运行",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "运行到完成",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "按声明顺序执行，每个都必须在下一个启动之前成功完成",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "如果 Pod 的 Init 容器失败，kubelet 会不断地重启该 Init 容器直到该容器成功为止。\n 然而，如果 Pod 对应的 restartPolicy 值为 \"Never\"，Kubernetes 不会重新启动 Pod",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "场景",
+                    "connect-color": "#ADC865",
+                    "expandState": "collapse",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "只是安装过程用到的工具，不用集成到应用镜像",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "访问Secret",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "执行一些命令，条件满足后启动应用",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "生成配置文件，设置环境变量，git clone repo等",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "拓扑分布",
+                "connect-color": "#ADC865",
+                "layout_left_offset": null,
+                "layout": null,
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "通过给node打标签，然后给pod指定拓扑分布约束，来实现高可用和分布均匀",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "pod.spec.topologySpreadConstraints 字段定义",
+                    "connect-color": "#ADC865",
+                    "expandState": "collapse",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "maxSkew",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "任意两个拓扑域中 匹配的 pod 之间的最大允许差值\n必须>0",
+                            "connect-color": "#ADC865",
+                            "note": "- 当 `whenUnsatisfiable` 等于 \"DoNotSchedule\" 时，`maxSkew` 是目标拓扑域 中匹配的 Pod 数与全局最小值之间可存在的差异。\n- 当 `whenUnsatisfiable` 等于 \"ScheduleAnyway\" 时，调度器会更为偏向能够降低 偏差值的拓扑域。",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "topologyKey",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "节点Node标签，如果两个Node具有相同标签，\n视为在一个拓扑域",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "whenUnsatisfiable",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "DoNotSchedule：不调度",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "ScheduleAnyway：调度，会使得偏差最小化",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "labelSelector",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "用于查找匹配的 pod。匹配此标签的 Pod 将被统计",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "约定",
+                    "connect-color": "#ADC865",
+                    "expandState": "collapse",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "只有与新的 Pod 具有相同命名空间的 Pod 才能作为匹配候选者",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": " 没有 topologySpreadConstraints[*].topologyKey 指定标签的Node将被忽略",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "如果新 Pod 定义了 spec.nodeSelector 或 spec.affinity.nodeAffinity，则 不匹配的节点会被忽略",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "集群级别约束",
+                    "connect-color": "#ADC865",
+                    "expandState": "collapse",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "Pod 没有在其 .spec.topologySpreadConstraints 设置任何约束",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Pod 隶属于某个服务、副本控制器、ReplicaSet 或 StatefulSet",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "参考：将默认约束作为 PodTopologySpread 插件参数的一部分来设置",
+                        "connect-color": "#ADC865",
+                        "hyperlink": "https://kubernetes.io/zh/docs/reference/scheduling/config/#profiles",
+                        "hyperlinkTitle": "调度器配置",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "默认约束：启用 DefaultPodTopologySpread，SelectorSpread 插件会被禁用",
+                        "connect-color": "#ADC865",
+                        "note": "默认配置如下\n\n```yaml\ndefaultConstraints:\n  - maxSkew: 3\n    topologyKey: \"kubernetes.io/hostname\"\n    whenUnsatisfiable: ScheduleAnyway\n  - maxSkew: 5\n    topologyKey: \"topology.kubernetes.io/zone\"\n    whenUnsatisfiable: ScheduleAnyway\n```",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "对比亲和性配置",
+                    "connect-color": "#ADC865",
+                    "expandState": "collapse",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "对于 PodAffinity，你可以尝试将任意数量的 Pod 集中到符合条件的拓扑域中",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "对于 PodAntiAffinity，只能将一个 Pod 调度到某个拓扑域中",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "干扰Disruptions",
+                "connect-color": "#ADC865",
+                "layout_left_offset": null,
+                "layout": null
+              }
+            },
+            {
+              "data": {
+                "text": "临时容器",
+                "connect-color": "#ADC865",
+                "layout_left_offset": null,
+                "layout": null,
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "在已有pod中加入临时容器，容器崩溃后可以进入pod排障",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "alpha feature",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "工作负载资源",
+            "connect-color": "#ADC865",
+            "expandState": "expand",
+            "layout_mind_offset": null,
+            "layout_left_offset": null,
+            "layout": null
+          },
+          "children": [
+            {
+              "data": {
+                "text": "deployment",
+                "connect-color": "#ADC865",
+                "expandState": "collapse",
+                "layout_left_offset": null,
+                "layout": null
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "RelicaSets管理pod，而Deployment则管理replicasets",
+                    "connect-color": "#ADC865",
+                    "note": "一个 Deployment 为 Pods 和 ReplicaSets 提供声明式的更新能力",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "创建",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "deployment会创建名称为[Deployment名称]-[随机字符串]格式的replicaset\n随机字符串是使用 pod-template-hash 作为种子随机生成的。",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "pod的名称则在replicaset名称后面再加5位的随机字符串",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "kubectl rollout status deployment  xxx",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "更新",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "pod模板.spec.template更改，才会触发上线",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "通过调整新旧副本数量实现",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "翻转特性：一个deployment正在创建中发生更新，则立即停止创建旧的replicaset，然后开始创建新的，并缩容旧的",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "回滚",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "检查历史：kubectl rollout history deployment  xxx",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "回滚上个版本：kubectl rollout undo deployment  xxx",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "指定版本 --to-version=2",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "缩放",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "kubectl scale deploy xxx --replicas=10",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "HPA(pod水平自动缩放，Horizontal Pod Autoscaler)",
+                        "connect-color": "#ADC865",
+                        "note": "通过配置，实现pod根据cpu利用率自动缩放\n\n```bash\nkubectl autoscale deployment.v1.apps/nginx-deployment --min=10 --max=15 --cpu-percent=80\n```\n\n大致来说，HPA 将（通过 Deployment）增加或者减少 Pod 副本的数量以保持所有 Pod 的平均 CPU 利用率在 50% 左右",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "比例缩放",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "maxSurge",
+                            "connect-color": "#ADC865",
+                            "note": null,
+                            "expandState": "expand",
+                            "layout_left_offset": null,
+                            "layout": null
+                          },
+                          "children": [
+                            {
+                              "data": {
+                                "text": "最多超出数量",
+                                "connect-color": "#ADC865",
+                                "layout_left_offset": null,
+                                "layout": null
+                              }
+                            },
+                            {
+                              "data": {
+                                "text": "百分比转换为绝对数去除小数",
+                                "connect-color": "#ADC865",
+                                "layout_left_offset": null,
+                                "layout": null
+                              }
+                            },
+                            {
+                              "data": {
+                                "text": "默认25%",
+                                "connect-color": "#ADC865",
+                                "layout_left_offset": null,
+                                "layout": null
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "data": {
+                            "text": "maxUnavaliable",
+                            "connect-color": "#ADC865",
+                            "note": null,
+                            "expandState": "expand",
+                            "layout_left_offset": null,
+                            "layout": null
+                          },
+                          "children": [
+                            {
+                              "data": {
+                                "text": "最多不可用数量",
+                                "connect-color": "#ADC865",
+                                "layout_left_offset": null,
+                                "layout": null
+                              }
+                            },
+                            {
+                              "data": {
+                                "text": "百分比向上取整",
+                                "connect-color": "#ADC865",
+                                "layout_left_offset": null,
+                                "layout": null
+                              }
+                            },
+                            {
+                              "data": {
+                                "text": "默认25%",
+                                "connect-color": "#ADC865",
+                                "layout_left_offset": null,
+                                "layout": null
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "data": {
+                            "text": "maxSurge和maxUnavaliable不可同时为0",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "建议设置readiness探针",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "暂停、恢复",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "暂停后，不会触发更新上线：kubectl rollout pause",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "恢复：kubectl rollout resume",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "适合多次操作更改deployment，然后上线的情况",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "状态",
+                    "connect-color": "#ADC865",
+                    "expandState": "collapse",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "Progressing",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Complete",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Failed",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "清理策略",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "默认保留10个历史",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "在.spec.revisionHistoryLimit中设置",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "金丝雀部署",
+                    "connect-color": "#ADC865",
+                    "hyperlink": "https://www.notion.so/jiangys/SegmentFault-2b1c56047ad84af7bca8ba5a86b110b1",
+                    "hyperlinkTitle": "金丝雀部署概念",
+                    "expandState": "expand",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "部署新旧两套业务，deploy name不同，标签相同",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "service选择二者相同的标签；逐步缩容旧服务，扩容新服务",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "规约.spec",
+                    "connect-color": "#ADC865",
+                    "expandState": "collapse",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": ".selector",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": ".template",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": ".replicas：默认1",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": ".strategy：更新策略",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "type",
+                            "connect-color": "#ADC865",
+                            "expandState": "expand",
+                            "layout_left_offset": null,
+                            "layout": null
+                          },
+                          "children": [
+                            {
+                              "data": {
+                                "text": "Recreate",
+                                "connect-color": "#ADC865",
+                                "note": "创建新的pod之前，杀死所有旧的pod",
+                                "layout_left_offset": null,
+                                "layout": null
+                              }
+                            },
+                            {
+                              "data": {
+                                "text": "RollingUpdate",
+                                "connect-color": "#ADC865",
+                                "note": "滚动更新，通过maxUnavaliable和maxSurge控制",
+                                "layout_left_offset": null,
+                                "layout": null
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "data": {
+                            "text": ".rollingUpdate.maxUnavailable",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": ".rollingUpdate.maxSurge",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": ".progressDeadlineSeconds",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": ".minReadySeconds\n最小就绪时间，只有超出这个时间，才会根据探针判断pod是否可用，默认0",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": " revisionHistoryLimit：存储历史版本数量",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "paused：暂停deployment\n暂停和未暂停的唯一区别，是暂停状态的任何修改不会触发新的上线",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "replicaset",
+                "connect-color": "#ADC865",
+                "layout_left_offset": null,
+                "layout": null,
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "保证给定数量的、完全相同的 Pod 的可用性",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "ReplicationController 的后继者",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "statefulset管理有状态应用",
+                "connect-color": "#ADC865",
+                "layout_left_offset": null,
+                "layout": null,
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "限制",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "存储由PV驱动，基于请求的storage class",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "删除sts不会删除存储卷",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "需要手动创建headless service",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "删除 StatefulSets 时，StatefulSet 不提供任何终止 Pod 的保证。建议删除之前，先缩放为0",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "默认的OrderedReady策略，pod出现问题时，需要人工干预才能修复",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "pod标识",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "有序索引0..N-1",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "主机名是$(StatefulSet 名称)-$(序号)",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "网络域名$(服务名称).$(命名空间).svc.cluster.local，.cluster.local是默认集群域名，可以修改",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "存储：为每个 VolumeClaimTemplate 创建一个 PersistentVolume",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "statefulset.kubernetes.io/pod-name，该标签值设置为 Pod 名称",
+                        "connect-color": "#ADC865",
+                        "note": "可以用来给特定的pod绑定一个Service",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "部署扩缩保证",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "特点",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "创建时0～N-1顺序创建",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "删除时，逆序终止",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "缩放：应用到某个pod之前，其前面所有的pod必须是Running和Ready",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": " Pod 终止之前，所有的继任者必须完全关闭",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "管理策略\n.spec.podManagementPolicy",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "expandState": "expand",
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "OrderedReady：默认，实现上述特点",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "Parallel：并行启动终止，只影响扩缩容操作",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "更新策略\nspec.updateStrategy",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand",
+                    "layout_left_offset": null,
+                    "layout": null
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "OnDelete：必须手动删除pod，才会创建新版本",
+                        "connect-color": "#ADC865",
+                        "layout_left_offset": null,
+                        "layout": null
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "RollingUpdate：默认配置，按照pod序号逆序一次更新一个pod",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand",
+                        "layout_left_offset": null,
+                        "layout": null
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "分区",
+                            "connect-color": "#ADC865",
+                            "expandState": "expand",
+                            "note": "通过声明 .spec.updateStrategy.rollingUpdate.partition 的方式，指定一个序号，**所有序号小于该分区序号的 Pod 都不会被更新，并且，即使他们被删除也会依据之前的版本进行重建。**\n\n可以实现金丝雀部署",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "强制回滚",
+                            "connect-color": "#ADC865",
+                            "note": "如果配置错误，导致pod不会进入就绪状态,更新就卡在这里了。这时只更新配置还不行，必须删除有问题的pod",
+                            "layout_left_offset": null,
+                            "layout": null
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "daemonset",
+                "connect-color": "#ADC865",
+                "layout_left_offset": null,
+                "layout": null,
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "符合条件的节点上运行守护pod",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "确保符合条件节点始终一个pod副本",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "加入集群自动创建，离开自动销毁",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "通过spec.template.spec.nodeSelector\n或.spec.template.spec.affinity选择节点",
+                    "connect-color": "#ADC865",
+                    "layout_left_offset": null,
+                    "layout": null
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "job",
+                "connect-color": "#ADC865",
+                "layout_left_offset": null,
+                "layout": null,
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "定义：创建一个或多个pod，并将继续重试pod执行，直到指定数量的pod成功终止",
+                    "connect-color": "#ADC865"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "job spec",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "pod模板",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": ".spec.temeplate必须",
+                            "connect-color": "#ADC865"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": ".spec.template.spec.restartPolicy只能设置为Never或者OnFailure",
+                            "connect-color": "#ADC865"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": ".spec.completions: 指定job需要成功运行Pods的次数。默认值: 1",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": ".spec.parallelism: 指定job在任一时刻应该并发运行Pods的数量。默认值: 1",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": ".spec.activeDeadlineSeconds: 指定job可运行的时间期限，超过时间还未结束，系统将会尝试进行终止",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": ".spec.backoffLimit: 指定job失败后进行重试的次数。默认是6次，每次失败后重试会有延迟时间，该时间是指数级增长，最长时间是6min。",
+                            "connect-color": "#ADC865",
+                            "layout_left_offset": null
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "并行执行",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "非并行：运行一个pod，pod成功结束则job结束",
+                            "connect-color": "#ADC865"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "指定完成次数并行",
+                            "connect-color": "#ADC865",
+                            "expandState": "collapse"
+                          },
+                          "children": [
+                            {
+                              "data": {
+                                "text": ".spec.completions>0",
+                                "connect-color": "#ADC865"
+                              }
+                            },
+                            {
+                              "data": {
+                                "text": ".spec.parallelism根据实际配置",
+                                "connect-color": "#ADC865"
+                              }
+                            },
+                            {
+                              "data": {
+                                "text": "多个pod同时运行，直到指定数量pod完成，job结束",
+                                "connect-color": "#ADC865"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "data": {
+                            "text": " 工作队列模式",
+                            "connect-color": "#ADC865",
+                            "expandState": "collapse"
+                          },
+                          "children": [
+                            {
+                              "data": {
+                                "text": ".spec.completions=1，.spec.parallelism>1",
+                                "connect-color": "#ADC865"
+                              }
+                            },
+                            {
+                              "data": {
+                                "text": "多个pod同时并行处理（例如消费数据）",
+                                "connect-color": "#ADC865"
+                              }
+                            },
+                            {
+                              "data": {
+                                "text": "其中任意一个完成退出，其他pod也立即终止",
+                                "connect-color": "#ADC865"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "pod或者容器执行中出错\n.spec.template.spec.restartPolicy",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "Never：重新启动新的pod",
+                            "connect-color": "#ADC865"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "OnFailure：重启当前pod",
+                            "connect-color": "#ADC865"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "调试时推荐使用Never",
+                            "connect-color": "#ADC865"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "回退失效\n.spec.backoffLimit",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "回退重试时间将会按指数增长 （从 10 秒、20 秒到 40 秒）最多至 6 分钟",
+                            "connect-color": "#ADC865"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": " Job 的 Pod 被删除或者 Pod 成功时没有其它 Pod 处于失败状态，失效回退的次数也会被重置（为 0）。",
+                            "connect-color": "#ADC865"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "终止和清理",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "Job完成时不会删除pod",
+                            "connect-color": "#ADC865"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": ".spec.activeDeadlineSeconds\nJob执行超过该时间立即终止",
+                            "connect-color": "#ADC865"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "自动清理完成的Job",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": ".spec.ttlSecondsAfterFinished",
+                            "connect-color": "#ADC865"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "0会完成后立即删除",
+                            "connect-color": "#ADC865"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "Job实践模式",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "Job模板",
+                            "connect-color": "#ADC865",
+                            "note": "一个job模版yaml，根据业务参数生成多个配置yaml\n可以通过标签进行管理\n.spec.completions=1+.spec.parallelism=1"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "每工作条目一 Pod 的队列",
+                            "connect-color": "#ADC865",
+                            "note": ".spec.completions>0+任意.spec.parallelism"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "Pod数量可变的队列",
+                            "connect-color": "#ADC865",
+                            "note": ".spec.completions=1+任意.spec.parallelism"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "普通Job",
+                            "connect-color": "#ADC865",
+                            "note": ".spec.completions>0+任意.spec.parallelism"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "高级用法",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "选择运算符",
+                            "connect-color": "#ADC865",
+                            "expandState": "expand"
+                          },
+                          "children": [
+                            {
+                              "data": {
+                                "text": "不推荐使用：避免选择意外的pod，导致其他pod被删除等",
+                                "connect-color": "#ADC865"
+                              }
+                            },
+                            {
+                              "data": {
+                                "text": "场景1:不停止当前job和pod，但是希望新的pod使用新配置",
+                                "connect-color": "#ADC865"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "cronjob",
+                "connect-color": "#ADC865",
+                "layout_left_offset": null,
+                "layout": null,
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "时区基于 kube-controller-manager.的时区",
+                    "connect-color": "#ADC865"
+                  }
+                },
+                {
+                  "data": {
+                    "text": ".spec",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": ".spec.schedule: 指定任务运行周期",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "cron",
+                            "connect-color": "#ADC865",
+                            "note": "```\n# ┌───────────── 分钟 (0 - 59)\n# │ ┌───────────── 小时 (0 - 23)\n# │ │ ┌───────────── 月的某天 (1 - 31)\n# │ │ │ ┌───────────── 月份 (1 - 12)\n# │ │ │ │ ┌───────────── 周的某天 (0 - 6) （周日到周一；在某些系统上，7 也是星期日）\n# │ │ │ │ │                                   \n# │ │ │ │ │\n# │ │ │ │ │\n# * * * * *\n```",
+                            "layout_right_offset": null
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "预定义的非标cron",
+                            "connect-color": "#ADC865",
+                            "note": "| 输入                   | 描述                         | 相当于    |\n| :--------------------- | ---------------------------- | --------- |\n| @yearly (or @annually) | 每年 1 月 1 日的午夜运行一次 | 0 0 1 1 * |\n| @monthly               | 每月第一天的午夜运行一次     | 0 0 1 * * |\n| @weekly                | 每周的周日午夜运行一次       | 0 0 * * 0 |\n| @daily (or @midnight)  | 每天午夜运行一次             | 0 0 * * * |\n| @hourly                | 每小时的开始一次             | 0 * * * * |",
+                            "layout_right_offset": null
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": ".spec.startingDeadlineSeconds: 指定任务运行的截止时间",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "不能低于10，控制器10s执行一次检查",
+                            "connect-color": "#ADC865"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "作用",
+                            "connect-color": "#ADC865",
+                            "note": "对于每一个 CronJob，CronJob 控制器将检查自上一次执行的时间点到现在为止有多少次执行被错过了。如果错过的执行次数超过了 100，则 CronJob 控制器将不再创建 Job 对象，并记录错误\n\n如果设置了 startingDeadlineSeconds，控制器将按照从 startingDeadlineSeconds 秒之前到现在为止的时间段计算被错过的执行次数，而不是按照从上一次执行的时间点到现在为止的时间段来计算被错过的执行次数。\n\n当 CronJob 在其计划的时间点应该创建 Job 时却创建失败，此时 CronJob 被认为错过了一次执行。例如，如果 concurrencyPolicy 被设置为 Forbid 且 CronJob 上一次创建的 Job 仍然在运行，此时 CronJob 再次遇到一个新的计划执行的时间点并尝试创建一个 Job，该此创建尝试将失败，并被认为错过了一次执行。\n\n又例如，假设某个 CronJob 被设置为：自 08:30:00 开始，每分钟创建一个新的 Job，且 CronJob 的 startingDeadlineSeconds 字段未被设置。如果 CronJob 控制器恰好在 08:29:00 到 10:21:00 这个时间段出现故障（例如 Crash），则该 CronJob 将不会再次执行，因为其错过的执行次数已经超过了 100。"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": ".spec.concurrencyPolicy: 任务的并发策略",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "Allow：默认",
+                            "connect-color": "#ADC865"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "Forbid：禁止，如果前一个没有完成，直接跳过当前",
+                            "connect-color": "#ADC865"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "Replace：取消当前，并创建新的",
+                            "connect-color": "#ADC865"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": ".spec.jobTemplate: 需要运行的任务，格式同Job",
+                        "connect-color": "#ADC865"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": ".spec.suspend ",
+                        "connect-color": "#ADC865"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "spec.successfulJobsHistoryLimit 和 .spec.failedJobsHistoryLimit",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "保留历史，默认3和1",
+                            "connect-color": "#ADC865"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "限制",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "可能并发，保证幂等性",
+                        "connect-color": "#ADC865"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "分支主题",
+                        "connect-color": "#ADC865"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "v2版本",
+                    "connect-color": "#ADC865"
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "垃圾收集",
+                "connect-color": "#ADC865",
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "删除曾经有onwer，现在没有owner的对象",
+                    "connect-color": "#ADC865"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "Owners and dependents",
+                    "connect-color": "#ADC865",
+                    "note": "",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "metadata.ownerReferences",
+                        "connect-color": "#ADC865"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "例如，一个 ReplicaSet 是一组 Pod 的属主",
+                        "connect-color": "#ADC865"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "可以手动设置",
+                        "connect-color": "#ADC865"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "不允许跨namespace",
+                        "connect-color": "#ADC865"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "控制垃圾收集器删除附属\n属主对象设置 deleteOptions.propagationPolicy 字段",
+                    "connect-color": "#ADC865",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "删除对象时不删除附属：Orphan",
+                        "connect-color": "#ADC865"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "自动删除附属：级联删除",
+                        "connect-color": "#ADC865",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "前台模式：Foreground",
+                            "connect-color": "#ADC865",
+                            "note": "1. 根对象首先进入 deletion in progress\n2. 垃圾收集器会删除对象的所有附属\n3. 在删除了所有有阻塞能力的附属（对象的 ownerReference.blockOwnerDeletion=true） 之后，删除属主对象。"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "后台模式：Background",
+                            "connect-color": "#ADC865",
+                            "note": "Kubernetes 会立即删除属主对象，之后垃圾收集器 会在后台删除其附属对象。\n\n"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "已完成资源的TTL控制器",
+                "connect-color": "#ADC865",
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "限制已完成执行的资源对象的生命周期",
+                    "connect-color": "#ADC865"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "当前只支持Job",
+                    "connect-color": "#ADC865"
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "ReplicationController",
+                "connect-color": "#ADC865",
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "命令行缩写rc",
+                    "connect-color": "#ADC865"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "不推荐，不支持基于集合的标签选择运算符",
+                    "connect-color": "#ADC865"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "被ReplicaSet替代",
+                    "connect-color": "#ADC865"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "data": {
+        "text": "服务、负载均衡和联网",
+        "connect-color": "#75CBE7",
+        "expandState": "collapse"
+      },
+      "children": [
+        {
+          "data": {
+            "text": "拓扑感知路由：已废弃",
+            "connect-color": "#75CBE7",
+            "priority": null
+          }
+        },
+        {
+          "data": {
+            "text": "Service",
+            "connect-color": "#75CBE7",
+            "expandState": "collapse"
+          },
+          "children": [
+            {
+              "data": {
+                "text": "使用选择运算符确定pod",
+                "connect-color": "#75CBE7"
+              }
+            },
+            {
+              "data": {
+                "text": "云原生服务发现：api查询endPoints",
+                "connect-color": "#75CBE7"
+              }
+            },
+            {
+              "data": {
+                "text": "定义svc",
+                "connect-color": "#75CBE7",
+                "note": "```yaml\napiVersion: v1\nkind: Service\nmetadata:\n  name: my-service\nspec:\n  selector:\n    app: MyApp\n  ports:\n    - protocol: TCP\n      port: 80\n      targetPort: 9376\n```      ",
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "port：服务端口",
+                    "connect-color": "#75CBE7"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "targetPort：目标pod端口，默认等于port",
+                    "connect-color": "#75CBE7",
+                    "note": "Pod 中的端口定义是有名字的，你可以在服务的 targetPort 属性中引用这些名称"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "默认协议tcp",
+                    "connect-color": "#75CBE7"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "service会分配一个cluster ip\n自动创建对应的endPoint",
+                    "connect-color": "#75CBE7",
+                    "note": "每个pod创建会分配ip\n\n当创建svc的时候，会创建同名的endpoint对象，并把选择运算符匹配的pod ip作为endPoint对象的ip列表"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "无选择运算符的svc",
+                    "connect-color": "#75CBE7",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "创建svc",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "手动创建同名EndPoint\n自动绑定svc和endpoint",
+                        "connect-color": "#75CBE7",
+                        "note": ""
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "EndPoints的地址数量不能超出1000",
+                    "connect-color": "#75CBE7"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "应用协议",
+                    "connect-color": "#75CBE7"
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "虚拟IP和service代理",
+                "connect-color": "#75CBE7",
+                "expandState": "expand",
+                "note": "这里几种代理模式，讲的是，为service创建一个虚拟ip之后，按照之前内容，会创建对应的endpoint维护service ip到pod ip之间的关系。\n但是这个关系如何在物理机上实现？这个实现就是利用本节介绍的代理模式"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "为什么不使用dns轮询",
+                    "connect-color": "#75CBE7",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "应用可能只执行一次dns查找",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "不遵循TTL，时效性差",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "过低的TTL导致dns负载太高",
+                        "connect-color": "#75CBE7"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "userspace代理模式",
+                    "connect-color": "#75CBE7",
+                    "layout_left_offset": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "iptables 代理模式",
+                    "connect-color": "#75CBE7",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "随机选择后端",
+                        "connect-color": "#75CBE7"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "IPVS 代理模式",
+                    "connect-color": "#75CBE7",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "服务多时性能更好",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "负载均衡算法多",
+                        "connect-color": "#75CBE7"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "多端口service\n必须为每个端口指定名称",
+                "connect-color": "#75CBE7",
+                "expandState": "expand"
+              }
+            },
+            {
+              "data": {
+                "text": "可以手动设定.spec.clusterIP",
+                "connect-color": "#75CBE7"
+              }
+            },
+            {
+              "data": {
+                "text": "服务发现",
+                "connect-color": "#75CBE7",
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "环境变量",
+                    "connect-color": "#75CBE7",
+                    "note": "环境变量` {SVCNAME}_SERVICE_HOST` 和 `{SVCNAME}_SERVICE_PORT` ，在svc创建后生成，自动注入到之后创建的pod中"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "DNS",
+                    "connect-color": "#75CBE7",
+                    "note": "",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "my-service.my-ns",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "唯一的一种能够访问 ExternalName 类型的 Service 的方式",
+                        "connect-color": "#75CBE7"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "HeadlessService",
+                "connect-color": "#75CBE7",
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "设定spec.clusterIP为None实现",
+                    "connect-color": "#75CBE7"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "有选择运算符",
+                    "connect-color": "#75CBE7",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "创建Endpoints记录",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "修改dns配置返回A记录",
+                        "connect-color": "#75CBE7",
+                        "note": "A记录就是域名->IP的对应关系"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "无选择运算符",
+                    "connect-color": "#75CBE7",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "不会创建EndPoints记录",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "对于ExternalName类型服务，查找其CNAME记录",
+                        "connect-color": "#75CBE7",
+                        "note": "CNAME记录就是个别名，a.com->b.com"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "其他类型，查询与service名称相同的任何Endpoints记录",
+                        "connect-color": "#75CBE7"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "服务类型",
+                "connect-color": "#75CBE7",
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "ClusterIP",
+                    "connect-color": "#75CBE7",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "默认",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "只能集群内访问",
+                        "connect-color": "#75CBE7"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "NodePort",
+                    "connect-color": "#75CBE7",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "--service-node-port-range 标志指定的范围内分配端口",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": ".spec.ports[*].nodePort指定端口",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "不指定端口则随机选择",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "每个Node该端口都可访问",
+                        "connect-color": "#75CBE7"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "LoadBalancer",
+                    "connect-color": "#75CBE7",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "云服务商提供的外部负载均衡",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "配置后，云厂商会分配一个ip，describe可以查看",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "访问分配ip的流量会分配到service 的clusterIP",
+                        "connect-color": "#75CBE7"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "ExternalName",
+                    "connect-color": "#75CBE7",
+                    "expandState": "expand",
+                    "note": "```yaml\napiVersion: v1\nkind: Service\nmetadata:\n  name: my-service\n  namespace: prod\nspec:\n  type: ExternalName\n  externalName: my.database.example.com\n```"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "将服务映射到 DNS 名称",
+                        "connect-color": "#75CBE7"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "示例用，将my-service.prod映射到某个域名",
+                        "connect-color": "#75CBE7",
+                        "note": ""
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "集群内可以通过my-service.prod访问服务，\n无需关心服务部署在哪里",
+                        "connect-color": "#75CBE7",
+                        "note": ""
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "不配置selector",
+                        "connect-color": "#75CBE7"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "外部IP",
+                "connect-color": "#75CBE7",
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "任何服务都可以配置",
+                    "connect-color": "#75CBE7"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "将服务直接暴露给配置的外部ip",
+                    "connect-color": "#75CBE7",
+                    "note": "例如nginx-service配置外部ip上168.2.3.1，该ip也绑定到了集群，则访问该ip和端口，流量将路由到serviceIP->pod"
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "externalTrafficPolicy",
+                "connect-color": "#75CBE7"
+              }
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "DNS",
+            "connect-color": "#75CBE7",
+            "expandState": "collapse"
+          },
+          "children": [
+            {
+              "data": {
+                "text": "为服务和pod创建，替代ip访问",
+                "connect-color": "#75CBE7"
+              }
+            },
+            {
+              "data": {
+                "text": "服务：my-svc.my-namespace.svc.cluster-domain.example",
+                "connect-color": "#75CBE7"
+              }
+            },
+            {
+              "data": {
+                "text": "Pods",
+                "connect-color": "#75CBE7",
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "pod：pod-ip-address.my-namespace.pod.cluster-domain.example",
+                    "connect-color": "#75CBE7",
+                    "layout_left_offset": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "deoloy或者daemonset创建的pod\npod-ip-address.deployment-name.my-namespace.svc.cluster-domain.example",
+                    "connect-color": "#75CBE7",
+                    "layout_left_offset": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "hostname字段",
+                    "connect-color": "#75CBE7",
+                    "note": "pod的hostname默认=metadata.name，但是可以通过hostname字段覆盖"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "subdomain字段",
+                    "connect-color": "#75CBE7",
+                    "note": "某 Pod 的 hostname 设置为 “foo”，subdomain 设置为 “bar”， 在名字空间 “my-namespace” 中对应的完全限定域名（FQDN）为 “foo.bar.my-namespace.svc.cluster-domain.example”。"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "DNS策略",
+                    "connect-color": "#75CBE7",
+                    "layout_left_offset": null
+                  }
+                },
+                {
+                  "data": {
+                    "text": "DNS配置",
+                    "connect-color": "#75CBE7"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "Ingress",
+            "connect-color": "#75CBE7",
+            "note": "中文：入口\n作用：为内部服务创建一个统一的入口，然后根据host和url匹配路由到后端哪个service\n用来代替NodePort或者loadBalancer暴露服务，客户端也不用关心服务的端口、服务名。\n是不是和nginx很像？其实就是！\n单独的Ingress只是定义了规则，不会起作用，其只是方便外部切换ingress的实现，真正实现要靠ingress controller"
+          }
+        },
+        {
+          "data": {
+            "text": "Ingress控制器",
+            "connect-color": "#75CBE7",
+            "expandState": "collapse"
+          },
+          "children": [
+            {
+              "data": {
+                "text": "官方支持nginx，aws，gce",
+                "connect-color": "#75CBE7"
+              }
+            },
+            {
+              "data": {
+                "text": "一个集群可以维护多个控制器，在ingress中通过class指定使用哪个",
+                "connect-color": "#75CBE7"
+              }
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "拓扑感知提示",
+            "connect-color": "#75CBE7"
+          }
+        },
+        {
+          "data": {
+            "text": "服务内部流量策略",
+            "connect-color": "#75CBE7",
+            "expandState": "collapse"
+          },
+          "children": [
+            {
+              "data": {
+                "text": "开启ServiceInternalTrafficPolicy",
+                "connect-color": "#75CBE7"
+              }
+            },
+            {
+              "data": {
+                "text": "service设置internalTrafficPolicy=local",
+                "connect-color": "#75CBE7"
+              }
+            },
+            {
+              "data": {
+                "text": "集群中的 Pod 所发起的流量，只路由量到和发起方处于相同节点的pod",
+                "connect-color": "#75CBE7"
+              }
+            },
+            {
+              "data": {
+                "text": "同一个service，externalTrafficPolicy=local时，该特性将不可用",
+                "connect-color": "#75CBE7"
+              }
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "断点切片",
+            "connect-color": "#75CBE7"
+          }
+        },
+        {
+          "data": {
+            "text": "网络策略",
+            "connect-color": "#75CBE7"
+          }
+        },
+        {
+          "data": {
+            "text": "HostAlias",
+            "connect-color": "#75CBE7",
+            "expandState": "expand"
+          },
+          "children": [
+            {
+              "data": {
+                "text": "在pod中配置",
+                "connect-color": "#75CBE7"
+              }
+            },
+            {
+              "data": {
+                "text": "向pod的/etc/hosts添加额外信息",
+                "connect-color": "#75CBE7"
+              }
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "IPV4和IPV6双协议栈",
+            "connect-color": "#75CBE7"
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "text": "存储",
+        "connect-color": "#D5A2DB",
+        "expandState": "expand"
+      },
+      "children": [
+        {
+          "data": {
+            "text": "卷",
+            "connect-color": "#D5A2DB",
+            "expandState": "collapse"
+          },
+          "children": [
+            {
+              "data": {
+                "text": "临时卷和持久卷",
+                "connect-color": "#D5A2DB"
+              }
+            },
+            {
+              "data": {
+                "text": ".spec.volumes设置，\n.spec.containers[*].volumeMounts 字段在容器中挂载",
+                "connect-color": "#D5A2DB"
+              }
+            },
+            {
+              "data": {
+                "text": "卷类型",
+                "connect-color": "#D5A2DB",
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "cephfs",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "configMap",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "emptyDir",
+                    "connect-color": "#D5A2DB",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "临时卷",
+                        "connect-color": "#D5A2DB"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "pod在该节点运行期间一直存在",
+                        "connect-color": "#D5A2DB"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "emptyDir.medium设置为Memory挂载内存",
+                        "connect-color": "#D5A2DB"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "downwardAPI",
+                    "connect-color": "#D5A2DB",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "暴露pod和container的配置到文件中",
+                        "connect-color": "#D5A2DB"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "使用subPath将不能接收更新",
+                        "connect-color": "#D5A2DB"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "glusterfs",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "hostpath",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "iscsi",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "local",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "nfs",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "persistentVolumeClaim",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "rbd",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "secret",
+                    "connect-color": "#D5A2DB"
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "subPath",
+                "connect-color": "#D5A2DB",
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "volumeMounts.subPath",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "使用卷的子路径，而不是根路径",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "subPathExpr替代subPath，根据变量动态构建",
+                    "connect-color": "#D5A2DB"
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "树外卷插件",
+                "connect-color": "#D5A2DB",
+                "expandState": "collapse"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "非kuberenets提供",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "实现标准容器存储接口CSI",
+                    "connect-color": "#D5A2DB"
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "挂载卷的传播",
+                "connect-color": "#D5A2DB",
+                "note": "挂载卷的传播能力允许将容器安装的卷共享到同一 Pod 中的其他容器， 甚至共享到同一节点上的其他 Pod。",
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "Container.volumeMounts 中的 mountPropagation 字段",
+                    "connect-color": "#D5A2DB",
+                    "note": ""
+                  }
+                },
+                {
+                  "data": {
+                    "text": "None",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "HostToContainer",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "Bidirectional",
+                    "connect-color": "#D5A2DB"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "卷快照",
+            "connect-color": "#D5A2DB"
+          }
+        },
+        {
+          "data": {
+            "text": "持久卷PV",
+            "connect-color": "#D5A2DB",
+            "note": "PV 卷是集群中的资源。PVC 申领是对这些资源的请求",
+            "expandState": "collapse"
+          },
+          "children": [
+            {
+              "data": {
+                "text": "Pv和PVC互动的生命周期",
+                "connect-color": "#D5A2DB",
+                "note": "",
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "供应",
+                    "connect-color": "#D5A2DB",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "静态",
+                        "connect-color": "#D5A2DB",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "提前创建PV，供pvc绑定",
+                            "connect-color": "#D5A2DB"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "动态",
+                        "connect-color": "#D5A2DB",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "从storageclass申请",
+                            "connect-color": "#D5A2DB"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "绑定",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "使用",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "保护",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "回收",
+                    "connect-color": "#D5A2DB",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "Retain",
+                        "connect-color": "#D5A2DB",
+                        "expandState": "expand"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "pvc删除，pv保留",
+                            "connect-color": "#D5A2DB"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "Delete",
+                        "connect-color": "#D5A2DB",
+                        "expandState": "expand",
+                        "note": "注意！！这里的意思是删除pvc，则删除pv对象，并不是擦除pv中的数据。"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "pv和pvc一起删除",
+                            "connect-color": "#D5A2DB"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "data": {
+                        "text": "Recycle",
+                        "connect-color": "#D5A2DB",
+                        "expandState": "expand",
+                        "note": "应该是指的在静态供应情况下，pvc删除后，不希望手动创建的pv删除"
+                      },
+                      "children": [
+                        {
+                          "data": {
+                            "text": "在卷上执行擦除，可以用于后续pvc的申领",
+                            "connect-color": "#D5A2DB"
+                          }
+                        },
+                        {
+                          "data": {
+                            "text": "已废弃，使用动态供应替代",
+                            "connect-color": "#D5A2DB"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "预留PV",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "扩充PVC申领",
+                    "connect-color": "#D5A2DB"
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "PersistentVolume",
+                "connect-color": "#D5A2DB",
+                "expandState": "expand",
+                "note": "```yaml\napiVersion: v1\nkind: PersistentVolume\nmetadata:\n  name: pv0003\nspec:\n  capacity:\n    storage: 5Gi\n  volumeMode: Filesystem\n  accessModes:\n    - ReadWriteOnce\n  persistentVolumeReclaimPolicy: Recycle\n  storageClassName: slow\n  mountOptions:\n    - hard\n    - nfsvers=4.1\n  nfs:\n    path: /tmp\n    server: 172.17.0.2\n```"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "容量：.spec.capacity.storage",
+                    "connect-color": "#D5A2DB",
+                    "note": "(E, P, T, G, M, K, m) or their power-of-two equivalents (Ei, Pi, Ti, Gi, Mi, Ki)"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "卷模式",
+                    "connect-color": "#D5A2DB",
+                    "note": "",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "Filesystem",
+                        "connect-color": "#D5A2DB"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "block",
+                        "connect-color": "#D5A2DB"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "访问模式",
+                    "connect-color": "#D5A2DB",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "ReadWriteOnce",
+                        "connect-color": "#D5A2DB",
+                        "font-weight": "bold"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "ReadOnlyMany",
+                        "connect-color": "#D5A2DB"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "ReadWriteMany",
+                        "connect-color": "#D5A2DB"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "类sotrageclass",
+                    "connect-color": "#D5A2DB",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "pv或者pvc可以设置class",
+                        "connect-color": "#D5A2DB"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "pv只能绑定请求相同class的pvc",
+                        "connect-color": "#D5A2DB"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "支持节点亲和性",
+                    "connect-color": "#D5A2DB"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "阶段",
+                    "connect-color": "#D5A2DB",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "Avaliable",
+                        "connect-color": "#D5A2DB"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "bound",
+                        "connect-color": "#D5A2DB"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Released",
+                        "connect-color": "#D5A2DB"
+                      }
+                    },
+                    {
+                      "data": {
+                        "text": "Failed：自动回收失败",
+                        "connect-color": "#D5A2DB"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "PersistentVolumeClaim",
+                "connect-color": "#D5A2DB",
+                "note": "```yaml\napiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: myclaim\nspec:\n  accessModes:\n    - ReadWriteOnce\n  volumeMode: Filesystem\n  resources:\n    requests:\n      storage: 8Gi\n  storageClassName: slow\n  selector:\n    matchLabels:\n      release: \"stable\"\n    matchExpressions:\n      - {key: environment, operator: In, values: [dev]}\n```",
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "支持选择运算符过滤卷",
+                    "connect-color": "#D5A2DB",
+                    "note": ""
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "使用PVC作为卷",
+                "connect-color": "#D5A2DB",
+                "note": "pv，pvc都是可以单独创建的，然后在pod的volumeMount中绑定；\n也可以在pod的volume中直接创建pv\n也可以在pod的volume中直接创建pvc\n\npvc可以当作卷直接用在volumeMount中绑定\n"
+              }
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "临时卷",
+            "connect-color": "#D5A2DB",
+            "note": "",
+            "expandState": "collapse"
+          },
+          "children": [
+            {
+              "data": {
+                "text": "emptyDIr",
+                "connect-color": "#D5A2DB"
+              }
+            },
+            {
+              "data": {
+                "text": "configMap",
+                "connect-color": "#D5A2DB"
+              }
+            },
+            {
+              "data": {
+                "text": "downwardAPI",
+                "connect-color": "#D5A2DB"
+              }
+            },
+            {
+              "data": {
+                "text": "secret",
+                "connect-color": "#D5A2DB"
+              }
+            },
+            {
+              "data": {
+                "text": "csi临时卷",
+                "connect-color": "#D5A2DB"
+              }
+            },
+            {
+              "data": {
+                "text": "通用临时卷",
+                "connect-color": "#D5A2DB"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "data": {
+        "text": "配置",
+        "connect-color": "#E25B44",
+        "expandState": "collapse"
+      },
+      "children": [
+        {
+          "data": {
+            "text": "configMap",
+            "connect-color": "#E25B44",
+            "expandState": "expand",
+            "note": "定义\n```yaml\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: game-demo\ndata:\n  # 类属性键；每一个键都映射到一个简单的值\n  player_initial_lives: \"3\"\n  ui_properties_file_name: \"user-interface.properties\"\n\n  # 类文件键\n  game.properties: |\n    enemy.types=aliens,monsters\n    player.maximum-lives=5    \n  user-interface.properties: |\n    color.good=purple\n    color.bad=yellow\n    allow.textmode=true    \n```\n使用\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: configmap-demo-pod\nspec:\n  containers:\n    - name: demo\n      image: alpine\n      command: [\"sleep\", \"3600\"]\n      env:\n        # 定义环境变量\n        - name: PLAYER_INITIAL_LIVES # 请注意这里和 ConfigMap 中的键名是不一样的\n          valueFrom:\n            configMapKeyRef:\n              name: game-demo           # 这个值来自 ConfigMap\n              key: player_initial_lives # 需要取值的键\n        - name: UI_PROPERTIES_FILE_NAME\n          valueFrom:\n            configMapKeyRef:\n              name: game-demo\n              key: ui_properties_file_name\n      volumeMounts:\n      - name: config\n        mountPath: \"/config\"\n        readOnly: true\n  volumes:\n    # 你可以在 Pod 级别设置卷，然后将其挂载到 Pod 内的容器中\n    - name: config\n      configMap:\n        # 提供你想要挂载的 ConfigMap 的名字\n        name: game-demo\n        # 来自 ConfigMap 的一组键，将被创建为文件\n        items:\n        - key: \"game.properties\"\n          path: \"game.properties\"\n        - key: \"user-interface.properties\"\n          path: \"user-interface.properties\"\n```\n\n整个挂载进去\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: mypod\nspec:\n  containers:\n  - name: mypod\n    image: redis\n    volumeMounts:\n    - name: foo\n      mountPath: \"/etc/foo\"\n      readOnly: true\n  volumes:\n  - name: foo\n    configMap:\n      name: myconfigmap\n```"
+          },
+          "children": [
+            {
+              "data": {
+                "text": "声明k-v或者配置文件",
+                "connect-color": "#E25B44"
+              }
+            },
+            {
+              "data": {
+                "text": "使用方式",
+                "connect-color": "#E25B44",
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "容器命令或者参数",
+                    "connect-color": "#E25B44"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "容器环境变量",
+                    "connect-color": "#E25B44",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "不会自动更新",
+                        "connect-color": "#E25B44"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "挂载文件",
+                    "connect-color": "#E25B44",
+                    "expandState": "expand"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "text": "会自动更新",
+                        "connect-color": "#E25B44"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "data": {
+                    "text": "api获取",
+                    "connect-color": "#E25B44"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "Secret",
+            "connect-color": "#E25B44",
+            "expandState": "expand"
+          },
+          "children": [
+            {
+              "data": {
+                "text": "保存敏感信息",
+                "connect-color": "#E25B44"
+              }
+            },
+            {
+              "data": {
+                "text": "使用",
+                "connect-color": "#E25B44",
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "挂载为文件",
+                    "connect-color": "#E25B44"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "环境变量",
+                    "connect-color": "#E25B44"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "由 kubelet 在为 Pod 拉取镜像时使用",
+                    "connect-color": "#E25B44"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "容器资源管理",
+            "connect-color": "#E25B44",
+            "expandState": "expand"
+          },
+          "children": [
+            {
+              "data": {
+                "text": "request和limit，request不设置默认=limit",
+                "connect-color": "#E25B44"
+              }
+            },
+            {
+              "data": {
+                "text": "cpu",
+                "connect-color": "#E25B44",
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "Kubernetes 中的一个 cpu 等于云平台上的 1 个 vCPU/核和裸机 Intel 处理器上的 1 个超线程",
+                    "connect-color": "#E25B44"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "具有小数点（如 0.1）的请求由 API 转换为 100m；最大精度是 1m",
+                    "connect-color": "#E25B44"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "requests.cpu先被转换为可能是小数的基础值，再乘以 1024。\n 这个数值和 2 的较大者用作 docker run 命令中的 --cpu-shares 标志的值",
+                    "connect-color": "#E25B44"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "limits.cpu 先被转换为 millicore 值，再乘以 100。 其结果就是每 100 毫秒内容器可以使用的 CPU 时间总量",
+                    "connect-color": "#E25B44"
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "内存",
+                "connect-color": "#E25B44",
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "E、P、T、G、M、K。你也可以使用对应的 2 的幂数：Ei、Pi、Ti、Gi、Mi、Ki",
+                    "connect-color": "#E25B44",
+                    "note": "Mi表示（1Mi=1024x1024）,M表示（1M=1000x1000）（其它单位类推， 如Ki/K Gi/G）"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "等于docker --memory参数",
+                    "connect-color": "#E25B44",
+                    "note": ""
+                  }
+                },
+                {
+                  "data": {
+                    "text": "容器申请超出限制会被拒，引发oom",
+                    "connect-color": "#E25B44"
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "text": "扩展资源",
+                "connect-color": "#E25B44",
+                "expandState": "expand"
+              },
+              "children": [
+                {
+                  "data": {
+                    "text": "自定义资源，分配到node",
+                    "connect-color": "#E25B44",
+                    "note": "```\ncurl --header \"Content-Type: application/json-patch+json\" \\\n--request PATCH \\\n--data '[{\"op\": \"add\", \"path\": \"/status/capacity/example.com~1foo\", \"value\": \"5\"}]' \\\nhttp://k8s-master:8080/api/v1/nodes/k8s-node-1/status\n```\n主节点为 k8s-master 的节点 k8s-node-1 上存在五个 example.com/foo 资源。"
+                  }
+                },
+                {
+                  "data": {
+                    "text": "pod为自定义资源设置request，limit，来限制分布",
+                    "connect-color": "#E25B44",
+                    "note": "```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: my-pod\nspec:\n  containers:\n  - name: my-container\n    image: myimage\n    resources:\n      requests:\n        cpu: 2\n        example.com/foo: 1\n      limits:\n        example.com/foo: 1\n```        "
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "data": {
+            "text": "pod优先级和抢占",
+            "connect-color": "#E25B44"
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "text": "安全",
+        "connect-color": "#FF8357"
+      }
+    },
+    {
+      "data": {
+        "text": "策略",
+        "connect-color": "#FAC172"
+      }
+    },
+    {
+      "data": {
+        "text": "调度和驱逐",
+        "connect-color": "#ADC865"
+      }
+    },
+    {
+      "data": {
+        "text": "集群管理",
+        "connect-color": "#75CBE7"
+      }
+    }
+  ],
+  "template": "default",
+  "theme": "rainbow",
+  "version": "1.3.5"
+}
