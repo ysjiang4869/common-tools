@@ -5,9 +5,11 @@ import net.lingala.zip4j.ZipFile
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.FilenameUtils
 import org.apache.commons.io.IOUtils
+import org.jys.tools.ToolsInterface
 import org.jys.tools.mindmap.nutshell.NutshellContent
 import org.jys.tools.mindmap.nutshell.NutshellNode
 import org.jys.tools.mindmap.xmind.*
+import org.jys.tools.utils.CommandArgs
 import org.jys.tools.utils.JsonUtil
 import java.io.File
 import java.nio.file.Files
@@ -16,7 +18,7 @@ import java.nio.file.Paths
 import java.util.*
 import kotlin.collections.HashMap
 
-object NutshellToXmind {
+object NutshellToXmind : ToolsInterface {
 
     fun convertContent(content: NutshellContent): List<XmindContent> {
         val rootTopic = XmindRootTopic()
@@ -54,37 +56,37 @@ object NutshellToXmind {
             xmindContents = convertContent(nutshellContent)
         }
         val tempFolder = Paths.get(UUID.randomUUID().toString())
-        val xmindFile = ZipFile(tempFolder.resolve( "temp.xmind").toFile())
-        val contentFile = tempFolder.resolve( "content.json")
+        val xmindFile = ZipFile(tempFolder.resolve("temp.xmind").toFile())
+        val contentFile = tempFolder.resolve("content.json")
         FileUtils.writeStringToFile(contentFile.toFile(), JsonUtil.mapper.writeValueAsString(xmindContents))
         xmindFile.addFile(contentFile.toFile())
 
-        val metadataFile = tempFolder.resolve( "metadata.json")
+        val metadataFile = tempFolder.resolve("metadata.json")
         FileUtils.writeStringToFile(metadataFile.toFile(), buildMetadata(xmindContents[0]))
         xmindFile.addFile(metadataFile.toFile())
 
         val nutShellResource = Paths.get(file.parentFile.absolutePath, file.nameWithoutExtension + "_nbmx_files")
         var xmindResource: Path? = null
         if (Files.exists(nutShellResource)) {
-            xmindResource = tempFolder.resolve( "resources")
+            xmindResource = tempFolder.resolve("resources")
             Files.createDirectory(xmindResource!!)
             Files.list(nutShellResource)
                 .forEach { Files.copy(it, Paths.get(xmindResource.toString(), it.fileName.toString())) }
             zipFile.addFolder(xmindResource.toFile())
         }
 
-        val manifestFile = tempFolder.resolve( "manifest.json")
+        val manifestFile = tempFolder.resolve("manifest.json")
         FileUtils.writeStringToFile(manifestFile.toFile(), buildManifest(xmindResource))
         xmindFile.addFile(manifestFile.toFile())
 
-        val finalFile=Paths.get(file.parentFile.absolutePath, file.nameWithoutExtension + ".xmind")
+        val finalFile = Paths.get(file.parentFile.absolutePath, file.nameWithoutExtension + ".xmind")
         Files.deleteIfExists(finalFile)
         Files.copy(
-            tempFolder.resolve( "temp.xmind"),
+            tempFolder.resolve("temp.xmind"),
             finalFile
         )
         FileUtils.forceDelete(tempFolder.toFile())
-        println("convert file["+file.name+"] success")
+        println("convert file[" + file.name + "] success")
     }
 
     private fun nodeToChild(children: XmindChildren, nodes: List<NutshellNode>?) {
@@ -134,5 +136,14 @@ object NutshellToXmind {
 
     class EmptyObject {
 
+    }
+
+    override fun handle(commandArgs: CommandArgs) {
+        commandArgs.file1 ?: error("no file specified, use -f1 to specific file path")
+        convertNutshellFile(Paths.get(commandArgs.file1!!).toFile())
+    }
+
+    override fun getCommandName(): String {
+        return "nbmx2xmind"
     }
 }
