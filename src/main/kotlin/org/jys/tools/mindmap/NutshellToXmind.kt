@@ -72,7 +72,7 @@ object NutshellToXmind : ToolsInterface {
             Files.createDirectory(xmindResource!!)
             Files.list(nutShellResource)
                 .forEach { Files.copy(it, Paths.get(xmindResource.toString(), it.fileName.toString())) }
-            zipFile.addFolder(xmindResource.toFile())
+            xmindFile.addFolder(xmindResource.toFile())
         }
 
         val manifestFile = tempFolder.resolve("manifest.json")
