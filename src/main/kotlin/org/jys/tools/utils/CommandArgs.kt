@@ -19,4 +19,7 @@ class CommandArgs {
     @Parameter(names = ["--quality"], description = "the quality when compress picture")
     var quality: Float = 1.0f
 
+    @Parameter(names = ["--host"], description = "custom host")
+    var host: String? = null
+
 }

@@ -12,6 +12,7 @@ import org.jys.tools.mindmap.xmind.*
 import org.jys.tools.utils.CommandArgs
 import org.jys.tools.utils.JsonUtil
 import java.io.File
+import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -51,18 +52,20 @@ object NutshellToXmind : ToolsInterface {
 
         val xmindContents: List<XmindContent>
         zipFile.getInputStream(fileHeader).use {
-            val contentJson = IOUtils.toString(it)
+            val contentJson = IOUtils.toString(it,StandardCharsets.UTF_8)
             val nutshellContent = JsonUtil.mapper.readValue(contentJson, NutshellContent::class.java)
             xmindContents = convertContent(nutshellContent)
         }
         val tempFolder = Paths.get(UUID.randomUUID().toString())
         val xmindFile = ZipFile(tempFolder.resolve("temp.xmind").toFile())
         val contentFile = tempFolder.resolve("content.json")
-        FileUtils.writeStringToFile(contentFile.toFile(), JsonUtil.mapper.writeValueAsString(xmindContents))
+        FileUtils.writeStringToFile(contentFile.toFile(),
+            JsonUtil.mapper.writeValueAsString(xmindContents),StandardCharsets.UTF_8)
         xmindFile.addFile(contentFile.toFile())
 
         val metadataFile = tempFolder.resolve("metadata.json")
-        FileUtils.writeStringToFile(metadataFile.toFile(), buildMetadata(xmindContents[0]))
+        FileUtils.writeStringToFile(metadataFile.toFile(),
+            buildMetadata(xmindContents[0]),StandardCharsets.UTF_8)
         xmindFile.addFile(metadataFile.toFile())
 
         val nutShellResource = Paths.get(file.parentFile.absolutePath, file.nameWithoutExtension + "_nbmx_files")
@@ -76,7 +79,7 @@ object NutshellToXmind : ToolsInterface {
         }
 
         val manifestFile = tempFolder.resolve("manifest.json")
-        FileUtils.writeStringToFile(manifestFile.toFile(), buildManifest(xmindResource))
+        FileUtils.writeStringToFile(manifestFile.toFile(), buildManifest(xmindResource),StandardCharsets.UTF_8)
         xmindFile.addFile(manifestFile.toFile())
 
         val finalFile = Paths.get(file.parentFile.absolutePath, file.nameWithoutExtension + ".xmind")

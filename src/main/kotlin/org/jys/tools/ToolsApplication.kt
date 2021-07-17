@@ -1,6 +1,7 @@
 package org.jys.tools
 
 import com.beust.jcommander.JCommander
+import org.jys.tools.mindmap.NutshellImageProcessor
 import org.jys.tools.mindmap.NutshellToXmind
 import org.jys.tools.picture.Compressor
 import org.jys.tools.utils.CommandArgs
@@ -10,7 +11,7 @@ import org.springframework.boot.runApplication
 @SpringBootApplication
 class ToolsApplication
 
-private var tools= arrayOf(NutshellToXmind, Compressor)
+private var tools= arrayOf(NutshellToXmind, Compressor,NutshellImageProcessor)
 
 fun main(args: Array<String>) {
     runApplication<ToolsApplication>(*args)

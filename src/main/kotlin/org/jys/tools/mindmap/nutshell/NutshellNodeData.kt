@@ -1,6 +1,7 @@
 package org.jys.tools.mindmap.nutshell
 
 import com.fasterxml.jackson.annotation.JsonAlias
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 class NutshellNodeData {
 
@@ -32,6 +33,7 @@ class NutshellNodeData {
 
     var imageTitle: String? = null
 
+    @JsonIgnore
     fun getImageFileName():String{
         val filePath=image!!.split("/")[1]
         return filePath.split("?")[0]
